@@ -28,6 +28,8 @@ fn main() {
     clear();
     let mut app = App::new(5, 5);
 
+    let mut all_presses: String = String::new();
+
     raw_line("q <- to quit");
 
     raw_mode(true);
@@ -43,7 +45,11 @@ fn main() {
             line(Position { x: 0, y: 5 }, "First", "blue");
             line(Position { x: 0, y: 11 }, "Sec", "red");
         }
+
+        all_presses = format!("{}{}", all_presses, collected_key_presses(&mut app));
     }
+
+    println!("{}", all_presses);
 
     raw_mode(false);
 }
