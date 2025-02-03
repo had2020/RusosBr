@@ -1,3 +1,6 @@
+use TerimalRtdm::*;
+
+/*
 use reqwest::Error;
 
 #[tokio::main]
@@ -18,4 +21,21 @@ async fn main() -> Result<(), Error> {
     }
 
     Ok(())
+}
+*/
+
+use std::io::{self, Read, Write};
+
+fn main() {
+    let mut app = App::new();
+
+    line("q <- to quit");
+
+    raw_mode(true);
+    loop {
+        if key_pressed(&mut app, "down") {
+            break;
+        }
+    }
+    raw_mode(false);
 }

@@ -6,9 +6,14 @@ version = 4
 name = "RusosBr"
 version = "0.1.0"
 dependencies = [
+ "TerimalRtdm",
  "reqwest",
  "tokio",
 ]
+
+[[package]]
+name = "TerimalRtdm"
+version = "0.1.0"
 
 [[package]]
 name = "addr2line"
