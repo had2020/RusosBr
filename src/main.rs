@@ -1,32 +1,29 @@
+use reqwest::Error;
 use TerimalRtdm::*;
 
-/*
-use reqwest::Error;
-
 #[tokio::main]
-async fn main() -> Result<(), Error> {
+async fn fetch_page() -> String {
     // url
-    let url = "https://example.com";
+    let url = "https://google.com"; // example & example.com
 
     // GET
-    let response = reqwest::get(url).await?;
+    let response = reqwest::get(url).await.unwrap();
 
     // vaildate success
     if response.status().is_success() {
         // get html content
-        let html_content = response.text().await?;
-        println!("HTML Content:\n{}", html_content);
+        let html_content = response.text().await.unwrap();
+        //println!("HTML Content:\n{}", html_content);
+        html_content
     } else {
         eprintln!("Failed to fetch URL: {}", response.status());
+        String::new()
     }
-
-    Ok(())
 }
-*/
 
 fn main() {
     clear();
-    let mut app = App::new(5, 5);
+    let mut app = App::new();
 
     let mut all_presses: String = String::new();
 
