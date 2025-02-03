@@ -24,24 +24,26 @@ async fn main() -> Result<(), Error> {
 }
 */
 
-use std::io::{self, Read, Write};
-
 fn main() {
+    clear();
     let mut app = App::new(5, 5);
 
     raw_line("q <- to quit");
 
     raw_mode(true);
     loop {
+        clear();
         // app loop
         if key_pressed(&mut app, "q") {
+            clear();
             break;
         }
 
-        clear();
+        if key_pressed(&mut app, "w") {
+            line(Position { x: 0, y: 5 }, "First", "blue");
+            line(Position { x: 0, y: 11 }, "Sec", "red");
+        }
     }
-    line(Position { x: 0, y: 5 }, "Hello", "blue");
-    line(Position { x: 0, y: 10 }, "Hello", "red");
 
     raw_mode(false);
 }
