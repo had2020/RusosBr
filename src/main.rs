@@ -27,15 +27,21 @@ async fn main() -> Result<(), Error> {
 use std::io::{self, Read, Write};
 
 fn main() {
-    let mut app = App::new();
+    let mut app = App::new(5, 5);
 
-    line("q <- to quit");
+    raw_line("q <- to quit");
 
     raw_mode(true);
     loop {
-        if key_pressed(&mut app, "down") {
+        // app loop
+        if key_pressed(&mut app, "q") {
             break;
         }
+
+        clear();
     }
+    line(Position { x: 0, y: 5 }, "Hello", "blue");
+    line(Position { x: 0, y: 10 }, "Hello", "red");
+
     raw_mode(false);
 }
