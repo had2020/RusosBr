@@ -31,25 +31,25 @@ fn main() {
     let mut all_presses: String = String::new();
 
     raw_line("q <- to quit");
+    raw_line("w <- to show lines");
 
     raw_mode(true);
+
+    // app loop
     loop {
-        clear();
-        // app loop
-        if key_pressed(&mut app, "q") {
+        clear(); // clear last loop, or Rust debug logs
+        collect_presses(&mut app);
+
+        if key_press(&app, "q") {
             clear();
             break;
         }
 
-        if key_pressed(&mut app, "w") {
+        if key_press(&app, "w") {
             line(Position { x: 0, y: 5 }, "First", "blue");
             line(Position { x: 0, y: 11 }, "Sec", "red");
         }
-
-        all_presses = format!("{}{}", all_presses, collected_key_presses(&mut app));
     }
-
-    println!("{}", all_presses);
 
     raw_mode(false);
 }
