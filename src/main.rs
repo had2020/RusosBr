@@ -55,11 +55,13 @@ fn main() {
             line(Position { x: 0, y: 1 }, &typed_text, "red");
         }
 
-        use std::io::{self, Read, Write};
+        if is_typing && key_press(&app, "Enter") {
+            is_typing = false;
+            typed_text = format!("{}{}", " ", app.keys_pressed);
+        }
 
         if is_typing {
-            let bytes_read = io::stdin().read(&mut app.key_buffer).unwrap();
-            println!("{:?}", &app.key_buffer[..bytes_read]);
+            line(Position { x: 0, y: 1 }, &typed_text, "blue");
         }
 
         if is_typing {

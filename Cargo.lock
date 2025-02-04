@@ -13,9 +13,9 @@ dependencies = [
 
 [[package]]
 name = "TerimalRtdm"
-version = "0.0.1"
+version = "0.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "84527cf89de1f31553621d94f081764d92e5ed7137237a7dc8eb2227e93502b2"
+checksum = "f9e942e067201fec8298ef4d9a0f2b31c2f59ae308e1fece9469a46d4e1376b7"
 
 [[package]]
 name = "addr2line"
