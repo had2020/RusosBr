@@ -67,7 +67,7 @@ fn main() {
         if key_press(&app, "1") {
             let html_code = fetch_page("https://example.com");
             let parsed = parse_html_content(html_code);
-            line(Position { x: 0, y: 5 }, &parsed[0], "white");
+            line(Position { x: 0, y: 0 }, &parsed[1], "white");
         }
         if key_press(&app, "e") && !is_typing {
             is_typing = true;
