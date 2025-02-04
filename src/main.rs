@@ -2,18 +2,15 @@ use reqwest::Error;
 use TerimalRtdm::*;
 
 #[tokio::main]
-async fn fetch_page() -> String {
-    // url
-    let url = "https://google.com"; // example & example.com
-
+async fn fetch_page(url: &str) -> String {
+    // "https://example.com"
     // GET
     let response = reqwest::get(url).await.unwrap();
 
-    // vaildate success
     if response.status().is_success() {
         // get html content
         let html_content = response.text().await.unwrap();
-        //println!("HTML Content:\n{}", html_content);
+        //println!("HTML Content:\n{}", html_content); // Debug
         html_content
     } else {
         eprintln!("Failed to fetch URL: {}", response.status());
@@ -25,10 +22,12 @@ fn main() {
     clear();
     let mut app = App::new();
 
-    let mut all_presses: String = String::new();
+    let mut typed_text: String = String::new();
+    let mut is_typing: bool = false;
 
-    raw_line("q <- to quit");
-    raw_line("w <- to show lines");
+    raw_line("q <- (Quit)");
+    raw_line("w <- (Search bar)");
+    raw_line("e <- (google.com)");
 
     raw_mode(true);
 
@@ -43,8 +42,20 @@ fn main() {
         }
 
         if key_press(&app, "w") {
+            fetch_page("https://example.com");
             line(Position { x: 0, y: 5 }, "First", "blue");
             line(Position { x: 0, y: 11 }, "Sec", "red");
+        }
+        if key_press(&app, "e") {
+            is_typing = true;
+        }
+
+        if is_typing && key_press(&app, "Enter") {
+            is_typing = false;
+        }
+
+        if is_typing {
+            typed_text = format!("{}{}", typed_text, app.keys_pressed);
         }
     }
 
