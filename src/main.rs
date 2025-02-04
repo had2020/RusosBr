@@ -18,6 +18,10 @@ async fn fetch_page(url: &str) -> String {
     }
 }
 
+fn parse_html_content(html_code: String) -> Vec<String> {
+    vec![String::new()]
+}
+
 fn main() {
     clear();
     let mut app = App::new();
@@ -25,9 +29,9 @@ fn main() {
     let mut typed_text: String = String::new();
     let mut is_typing: bool = false;
 
-    raw_line("q <- (Quit)");
+    raw_line(": then q <- (Quit)");
     raw_line("e <- (Search bar)");
-    raw_line("w <- (google.com)");
+    raw_line("1 <- (google.com)");
 
     raw_mode(true);
 
@@ -36,18 +40,21 @@ fn main() {
         clear(); // clear last loop, or Rust debug logs
         collect_presses(&mut app);
 
-        if key_press(&app, "q") {
-            clear();
-            break;
+        if key_press(&app, ":") {
+            if halt_press_check(&mut app, "q") {
+                clear();
+                break;
+            }
         }
 
-        if key_press(&app, "w") {
-            fetch_page("https://example.com");
-            line(Position { x: 0, y: 5 }, "First", "blue");
-            line(Position { x: 0, y: 11 }, "Sec", "red");
+        if key_press(&app, "1") {
+            let html_code = fetch_page("https://example.com");
+            let parsed = parse_html_content(html_code);
+            line(Position { x: 0, y: 5 }, "First", "white");
         }
-        if key_press(&app, "e") {
+        if key_press(&app, "e") && !is_typing {
             is_typing = true;
+            app.keys_pressed = String::new();
         }
 
         if is_typing && key_press(&app, "Enter") {
@@ -55,19 +62,22 @@ fn main() {
             line(Position { x: 0, y: 1 }, &typed_text, "red");
         }
 
-        if is_typing && key_press(&app, "Enter") {
-            is_typing = false;
-            typed_text = format!("{}{}", " ", app.keys_pressed);
+        if is_typing && key_press(&app, "Space") {
+            typed_text = format!("{} ", typed_text);
         }
 
-        if is_typing {
-            line(Position { x: 0, y: 1 }, &typed_text, "blue");
+        if is_typing && key_press(&app, "Backspace") {
+            typed_text.pop();
         }
 
         if is_typing {
             if app.keys_pressed.len() == 1 {
                 typed_text = format!("{}{}", typed_text, app.keys_pressed);
             }
+        }
+
+        if is_typing {
+            line(Position { x: 0, y: 1 }, &typed_text, "blue");
         }
     }
 
