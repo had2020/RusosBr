@@ -26,8 +26,8 @@ fn main() {
     let mut is_typing: bool = false;
 
     raw_line("q <- (Quit)");
-    raw_line("w <- (Search bar)");
-    raw_line("e <- (google.com)");
+    raw_line("e <- (Search bar)");
+    raw_line("w <- (google.com)");
 
     raw_mode(true);
 
@@ -52,10 +52,20 @@ fn main() {
 
         if is_typing && key_press(&app, "Enter") {
             is_typing = false;
+            line(Position { x: 0, y: 1 }, &typed_text, "red");
+        }
+
+        use std::io::{self, Read, Write};
+
+        if is_typing {
+            let bytes_read = io::stdin().read(&mut app.key_buffer).unwrap();
+            println!("{:?}", &app.key_buffer[..bytes_read]);
         }
 
         if is_typing {
-            typed_text = format!("{}{}", typed_text, app.keys_pressed);
+            if app.keys_pressed.len() == 1 {
+                typed_text = format!("{}{}", typed_text, app.keys_pressed);
+            }
         }
     }
 
