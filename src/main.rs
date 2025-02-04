@@ -30,6 +30,7 @@ fn parse_html_content(html_code: String) -> Vec<String> {
             let chars_num = second_index - first_index;
             for iter in 0..chars_num {
                 let char = html_code.chars().nth(iter).unwrap();
+                println!("{}", char);
                 inner_content = format!("{}{}", inner_content, char);
             }
             parsed.push(inner_content);
