@@ -32,10 +32,23 @@ fn parse_html_content(html_code: String) -> Vec<String> {
                 let char = html_code.chars().nth(start_index + iter).unwrap();
                 inner_content = format!("{}{}", inner_content, char);
             }
-            parsed.push(inner_content);
+            parsed.push(inner_content.clone());
         }
     }
 
+    if let Some(first_index) = html_code.find("<p>") {
+        if let Some(second_index) = html_code.find("</p>") {
+            let start_index = first_index + "<p>".len();
+
+            let chars_num = second_index - start_index;
+
+            for iter in 0..chars_num {
+                let char = html_code.chars().nth(start_index + iter).unwrap();
+                inner_content = format!("{}{}", inner_content, char);
+            }
+            parsed.push(inner_content.clone());
+        }
+    }
     parsed
 }
 
