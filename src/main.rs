@@ -23,14 +23,13 @@ fn parse_html_content(html_code: String) -> Vec<String> {
     let mut inner_content = String::new();
 
     if let Some(first_index) = html_code.find("<h1>") {
-        //println!("Found at index: {}", first_index);
         if let Some(second_index) = html_code.find("</h1>") {
-            //println!("Found at index: {}", second_index);
+            let start_index = first_index + "<h1>".len();
 
-            let chars_num = second_index - first_index;
+            let chars_num = second_index - start_index;
+
             for iter in 0..chars_num {
-                let char = html_code.chars().nth(iter).unwrap();
-                println!("{}", chars_num);
+                let char = html_code.chars().nth(start_index + iter).unwrap();
                 inner_content = format!("{}{}", inner_content, char);
             }
             parsed.push(inner_content);
@@ -68,7 +67,7 @@ fn main() {
         if key_press(&app, "1") {
             let html_code = fetch_page("https://example.com");
             let parsed = parse_html_content(html_code);
-            line(Position { x: 0, y: 0 }, &parsed[1], "white");
+            line(Position { x: 0, y: 0 }, &parsed[1], "yellow");
         }
         if key_press(&app, "e") && !is_typing {
             is_typing = true;
