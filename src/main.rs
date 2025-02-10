@@ -27,7 +27,7 @@ async fn fetch_page(url: &str) -> String {
 
 fn parse_html_content(html_code: String) -> Vec<String> {
     let mut parsed = vec![String::new()];
-    let mut inner_content = String::new();
+    //let mut inner_content = String::new();
 
     /*
     if let Some(first_index) = html_code.find("<h1>") {
@@ -65,16 +65,20 @@ fn parse_html_content(html_code: String) -> Vec<String> {
 
     let mut current_element = Element { fi: 0, si: 0 };
     let mut inside_tag: bool = false;
-    let mut iter_content = "";
+    let mut element_type = 0; // 1 is normal text: p or h1-h6
+    let mut current_element_index = 0;
 
-    for (index, ch) in inner_content.chars().enumerate() {
+    for (index, ch) in html_code.chars().enumerate() {
         let condition = (ch, inside_tag);
 
         match condition {
-            //('<', false) => current_element.fi = index,
+            ('<', true) => {
+                inside_tag = false;
+                current_element_index += 1;
+            }
             ('>', false) => inside_tag = true,
-            //('p', false) | ('h', false) => (),
-            //('h', false) => (),
+            ('p', false) | ('h', false) => element_type = 1,
+            inside_tag => parsed[current_element_index].push(ch),
             _ => (),
         }
     }
