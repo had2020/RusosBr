@@ -32,22 +32,34 @@ fn parse_html_content(html_code: String) -> Vec<String> {
     let mut element_type = false;
     let mut current_element_index = parsed.len() - 1;
     let mut char_rule_counter = 0;
+    let mut correctly_closed: bool = false;
 
     for (_index, ch) in html_code.chars().enumerate() {
         let condition = (ch, inside_tag, element_type, inside_braces);
 
         match condition {
             ('>', true, true, false) => {
+                if correctly_closed {
+                    parsed.push(String::new());
+                }
+                correctly_closed = false;
                 element_type = false;
                 inside_tag = false;
                 current_element_index += 1;
-                parsed.push(String::new());
                 inside_braces = false;
                 char_rule_counter = 0;
             }
             ('>', true, true, true) => {
+                // inside start
+                correctly_closed = true;
                 element_type = false;
                 inside_braces = false;
+                char_rule_counter = 0;
+            }
+            ('>', true, false, true) => {
+                element_type = false;
+                inside_braces = false;
+                inside_tag = false;
                 char_rule_counter = 0;
             }
             ('<', false, false, false) => {
@@ -56,12 +68,12 @@ fn parse_html_content(html_code: String) -> Vec<String> {
                 char_rule_counter = 0;
             }
             ('p', true, false, true) | ('h', true, false, true) => {
-                if char_rule_counter <= 2 {
+                if char_rule_counter <= 2 && inside_braces {
                     element_type = true;
                 }
             }
             _ => {
-                if inside_tag && element_type {
+                if inside_tag && element_type && correctly_closed {
                     parsed[current_element_index].push(ch);
                 } else {
                     char_rule_counter += 1;
