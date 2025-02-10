@@ -64,17 +64,17 @@ fn parse_html_content(html_code: String) -> Vec<String> {
     }
 
     let mut current_element = Element { fi: 0, si: 0 };
-    let mut first_tag: bool = false;
-    let mut current_content = "";
+    let mut inside_tag: bool = false;
+    let mut iter_content = "";
 
     for (index, ch) in inner_content.chars().enumerate() {
-        println!("Index: {}, Character: {}", index, ch);
+        let condition = (ch, inside_tag);
 
-        match ch {
-            '<' => current_element.fi = index,
-            '>' => current_element.si = index,
-            'p' => (),
-            'h' => (),
+        match condition {
+            //('<', false) => current_element.fi = index,
+            ('>', false) => inside_tag = true,
+            //('p', false) | ('h', false) => (),
+            //('h', false) => (),
             _ => (),
         }
     }
