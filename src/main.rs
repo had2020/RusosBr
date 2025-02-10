@@ -10,7 +10,7 @@ async fn fetch_page(url: &str) -> String {
             .get(url)
             .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
             .header("Accept", "text/html")
-            .header("Accept-Encoding", "gzip, deflate") //compressed response
+            //.header("Accept-Encoding", "gzip, deflate") //compressed response
             .send()
             .await.unwrap();
 
@@ -28,7 +28,7 @@ async fn fetch_page(url: &str) -> String {
 fn parse_html_content(html_code: String) -> Vec<String> {
     let mut parsed = vec![String::new()];
     let mut inside_tag: bool = false;
-    let mut element_type = true;
+    let mut element_type = false;
     let mut current_element_index = parsed.len() - 1;
 
     for (index, ch) in html_code.chars().enumerate() {
@@ -41,7 +41,7 @@ fn parse_html_content(html_code: String) -> Vec<String> {
                 current_element_index += 1;
             }
             ('<', false, false) => inside_tag = true,
-            ('p', false, false) | ('h', false, false) => element_type = true,
+            ('p', true, false) | ('h', true, false) => element_type = true,
             _ => {
                 if inside_tag && element_type {
                     parsed[current_element_index].push(ch);
