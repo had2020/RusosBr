@@ -65,6 +65,14 @@ fn parse_html_content(html_code: String) -> Vec<String> {
                 inside_braces = true;
                 char_rule_counter = 0;
             }
+            /*
+            ('<', true, true, false) => {
+                // cutt of before printing rest
+                if correctly_closed {
+                    correctly_closed = false;
+                }
+            }
+            */
             ('p', true, false, true) | ('h', true, false, true) => {
                 if char_rule_counter <= 2 && inside_braces {
                     element_type = true;
