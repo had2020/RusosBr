@@ -28,23 +28,43 @@ async fn fetch_page(url: &str) -> String {
 fn parse_html_content(html_code: String) -> Vec<String> {
     let mut parsed = vec![String::new()];
     let mut inside_tag: bool = false;
+    let mut inside_braces: bool = false;
     let mut element_type = false;
     let mut current_element_index = parsed.len() - 1;
+    let mut char_rule_counter = 0;
 
-    for (index, ch) in html_code.chars().enumerate() {
-        let condition = (ch, inside_tag, element_type);
+    for (_index, ch) in html_code.chars().enumerate() {
+        let condition = (ch, inside_tag, element_type, inside_braces);
 
         match condition {
-            ('>', false, true) => {
+            ('>', true, true, false) => {
                 element_type = false;
                 inside_tag = false;
                 current_element_index += 1;
+                parsed.push(String::new());
+                inside_braces = false;
+                char_rule_counter = 0;
             }
-            ('<', false, false) => inside_tag = true,
-            ('p', true, false) | ('h', true, false) => element_type = true,
+            ('>', true, true, true) => {
+                element_type = false;
+                inside_braces = false;
+                char_rule_counter = 0;
+            }
+            ('<', false, false, false) => {
+                inside_tag = true;
+                inside_braces = true;
+                char_rule_counter = 0;
+            }
+            ('p', true, false, true) | ('h', true, false, true) => {
+                if char_rule_counter <= 2 {
+                    element_type = true;
+                }
+            }
             _ => {
                 if inside_tag && element_type {
                     parsed[current_element_index].push(ch);
+                } else {
+                    char_rule_counter += 1;
                 }
             }
         }
