@@ -131,7 +131,13 @@ fn main() {
 
         if is_typing && key_press(&app, "Enter") {
             is_typing = false;
-            line(Position { x: 0, y: 1 }, &typed_text, "red");
+            clear();
+            let searchurl = format!("https://{}", typed_text);
+            let html_code = fetch_page(&searchurl);
+            let parsed = parse_html_content(html_code);
+            for (index, item) in parsed.iter().enumerate() {
+                line(Position { x: index, y: 0 }, item, "yellow");
+            }
         }
 
         if is_typing && key_press(&app, "Space") {
