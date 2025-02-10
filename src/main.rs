@@ -52,12 +52,10 @@ fn parse_html_content(html_code: String) -> Vec<String> {
             ('>', true, true, true) => {
                 // inside start
                 correctly_closed = true;
-                element_type = false;
                 inside_braces = false;
                 char_rule_counter = 0;
             }
             ('>', true, false, true) => {
-                element_type = false;
                 inside_braces = false;
                 inside_tag = false;
                 char_rule_counter = 0;
