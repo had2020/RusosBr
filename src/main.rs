@@ -5,7 +5,14 @@ use TerimalRtdm::*;
 async fn fetch_page(url: &str) -> String {
     // "https://example.com"
     // GET
-    let response = reqwest::get(url).await.unwrap();
+    let client = reqwest::Client::new();
+    let response = client
+            .get(url)
+            .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3")
+            .header("Accept", "text/html")
+            .header("Accept-Encoding", "gzip, deflate") //compressed response
+            .send()
+            .await.unwrap();
 
     if response.status().is_success() {
         // get html content
@@ -22,6 +29,7 @@ fn parse_html_content(html_code: String) -> Vec<String> {
     let mut parsed = vec![String::new()];
     let mut inner_content = String::new();
 
+    /*
     if let Some(first_index) = html_code.find("<h1>") {
         if let Some(second_index) = html_code.find("</h1>") {
             let start_index = first_index + "<h1>".len();
@@ -49,6 +57,28 @@ fn parse_html_content(html_code: String) -> Vec<String> {
             parsed.push(inner_content.clone());
         }
     }
+    */
+    struct Element {
+        fi: usize, // first index
+        si: usize, // second index
+    }
+
+    let mut current_element = Element { fi: 0, si: 0 };
+    let mut first_tag: bool = false;
+    let mut current_content = "";
+
+    for (index, ch) in inner_content.chars().enumerate() {
+        println!("Index: {}, Character: {}", index, ch);
+
+        match ch {
+            '<' => current_element.fi = index,
+            '>' => current_element.si = index,
+            'p' => (),
+            'h' => (),
+            _ => (),
+        }
+    }
+
     parsed
 }
 
