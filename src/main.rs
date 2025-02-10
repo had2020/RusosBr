@@ -82,7 +82,7 @@ fn main() {
             let html_code = fetch_page("https://example.com");
             let parsed = parse_html_content(html_code);
             for (index, item) in parsed.iter().enumerate() {
-                line(Position { x: 0, y: 0 }, item, "yellow");
+                line(Position { x: index, y: 0 }, item, "yellow");
             }
         }
         if key_press(&app, "e") && !is_typing {
