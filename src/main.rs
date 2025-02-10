@@ -66,7 +66,7 @@ fn parse_html_content(html_code: String) -> Vec<String> {
     let mut current_element = Element { fi: 0, si: 0 };
     let mut inside_tag: bool = false;
     let mut element_type = 0; // 1 is normal text: p or h1-h6
-    let mut current_element_index = 0;
+    let mut current_element_index = parsed.len() - 1;
 
     for (index, ch) in html_code.chars().enumerate() {
         let condition = (ch, inside_tag);
@@ -78,7 +78,10 @@ fn parse_html_content(html_code: String) -> Vec<String> {
             }
             ('>', false) => inside_tag = true,
             ('p', false) | ('h', false) => element_type = 1,
-            inside_tag => parsed[current_element_index].push(ch),
+            inside_tag => {
+                println!("{:?}", parsed);
+                parsed[current_element_index].push(ch);
+            }
             _ => (),
         }
     }
@@ -95,7 +98,7 @@ fn main() {
 
     raw_line(": then q <- (Quit)");
     raw_line("e <- (Search bar)");
-    raw_line("1 <- (google.com)");
+    raw_line("1 <- (example.com)");
 
     raw_mode(true);
 
