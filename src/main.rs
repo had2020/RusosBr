@@ -110,9 +110,12 @@ fn main() {
     let mut typed_text: String = String::new();
     let mut is_typing: bool = false;
 
-    raw_line(": then q <- (Quit)");
-    raw_line("e <- (Search bar)");
-    raw_line("1 <- (example.com)");
+    raw_line("======================");
+    raw_line("|-RusosBr---Controls-|");
+    raw_line("| : then q <- (Quit) |");
+    raw_line("| e <- (Search bar)  |");
+    raw_line("| 1 <- (example.com) |");
+    raw_line("======================");
 
     raw_mode(true);
 
