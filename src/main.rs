@@ -1,3 +1,15 @@
+/*
+RusosBr, Rust based Terimal Browser.
+By: Hadrian Lazic
+Last Updated: 2/17/25
+License Under: MIT
+  ___                 ___
+ | _ \_  _ ___ ___ __| _ )_ _
+ |   / || (_-</ _ (_-< _ \ '_|
+ |_|_\\_,_/__/\___/__/___/_|
+
+*/
+
 use reqwest::Error;
 use TerimalRtdm::*;
 
