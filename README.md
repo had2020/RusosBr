@@ -1,19 +1,53 @@
-# RusosBr
- Rust based Terimal Browser
+# 📝 **RusosBr**  
+### 🦀 *Rust-based Terimal Browser*
 
-# Shortcuts
-- : then q <- (Quit)
+---
 
-- raw_line("e <- (Search bar)
+## 🔥 **Why RusosBr?**  
+RusosBr showcases the power and versatility of **Terminal Interface Library** 🖥️: [TerimalRtdm](https://github.com/had2020/TerimalRtdm)
 
-- raw_line("1 <- (example.com)
+---
 
-# Quit
-You must first press `:` and then `q`
+### 🚀 **Features**
+- Minimal, fast, and lightweight ✨  
+- Smooth terminal interaction using my terimal interface framework [TerimalRtdm](https://github.com/had2020/TerimalRtdm)
+- Written entirely in Rust for performance and safety 🛡️
 
-# Seatch Bar
-press `e` you must type a url like `hello.com`
-no https extra stuff just domain and extension
+---
 
-# Example search
-press `1` to view example.com, if you just wana test the app
+### 📦 **Installation**
+
+1. Clone the repository 🛜
+   ```sh
+   git clone https://github.com/had2020/RusosBr
+   cd RusosBr
+   ```
+   
+2. Build 🛠️
+   ```sh
+   cargo build --release
+   ```
+   
+3. Run 🏃
+   ```sh
+   ./target/release/RusosBr
+   ```
+   
+### 🔧 Built With
+- Rust 🦀
+- [TerimalRtdm](https://github.com/had2020/TerimalRtdm)
+- Tokio 🚦 
+- Reqwest 🛜
+
+### 📜 License
+This project is licensed under the [MIT License](https://github.com/had2020/Runo/blob/main/LICENSE)
+
+### Commands
+``` bash
+======================
+|-RusosBr---Controls-|
+| : then q <- (Quit) |
+| e <- (Search bar)  |
+| 1 <- (example.com) |
+======================
+```
