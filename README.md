@@ -2,9 +2,11 @@
  Rust based Terimal Browser
 
 # Shortcuts
-: then q <- (Quit)
-raw_line("e <- (Search bar)
-raw_line("1 <- (example.com)
+- : then q <- (Quit)
+
+- raw_line("e <- (Search bar)
+
+- raw_line("1 <- (example.com)
 
 # Quit
 You must first press `:` and then `q`
