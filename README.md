@@ -1,6 +1,12 @@
 # 📝 **RusosBr**  
 ### 🦀 *Rust-based Terimal Browser*
 
+
+https://github.com/user-attachments/assets/9249da7a-d0ee-4f0d-b4c6-5c2c31a9f216
+
+
+
+
 ---
 
 ## 🔥 **Why RusosBr?**  
